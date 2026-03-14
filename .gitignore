@@ -62,3 +62,8 @@ test_*.py.bak
 config/secrets.yaml
 .env
 .env.local
+
+# Data and outputs
+data/
+notebooks/
+reports/
