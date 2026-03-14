@@ -1,0 +1,330 @@
+# 外部冲击识别系统配置文件 v2.0
+# 扩展事件类型覆盖范围
+
+# 数据源配置 (全部使用免费接口)
+data_sources:
+  # A股数据源 - 免费
+  a_stock:
+    provider: "akshare"
+    index_symbols:
+      - "000001"  # 上证指数
+      - "399001"  # 深证成指
+      - "399006"  # 创业板指
+      - "000300"  # 沪深300
+    
+  # 外盘数据
+  global_markets:
+    us:
+      sp500: "^GSPC"
+      nasdaq: "^IXIC"
+      vix: "^VIX"
+    asia:
+      japan: "^N225"
+      hongkong: "^HSI"
+    
+  # 大宗商品
+  commodities:
+    crude_oil:
+      wti: "CL=F"
+      brent: "BZ=F"
+    gold: "GC=F"
+    silver: "SI=F"
+    copper: "HG=F"
+    natural_gas: "NG=F"
+  
+  # 加密货币 (新增)
+  cryptocurrency:
+    btc: "BTC-USD"
+    eth: "ETH-USD"
+    btc_futures: "BTC=F"
+  
+  # 汇率 (新增)
+  forex:
+    dxy: "DX-Y.NYB"  # 美元指数
+    usdcny: "CNY=X"  # 美元人民币
+  
+  # 利率 (新增)
+  rates:
+    us_10y: "^TNX"   # 美国10年期国债收益率
+    us_2y: "^FVX"    # 美国2年期国债收益率
+
+# 外部冲击事件分类 (扩展版)
+event_categories:
+  # 1. 地缘政治事件
+  geopolitical:
+    name: "地缘政治"
+    keywords:
+      - "战争"
+      - "军事冲突"
+      - "空袭"
+      - "制裁"
+      - "恐怖袭击"
+      - "政变"
+      - "外交危机"
+      - "领土争端"
+    related_assets: ["oil", "gold", "dxy", "vix"]
+    impact_sectors: ["military", "energy", "aerospace"]
+    
+  # 2. 能源冲击 (扩展)
+  energy_shock:
+    name: "能源冲击"
+    keywords:
+      - "原油暴涨"
+      - "油价飙升"
+      - "能源危机"
+      - "OPEC减产"
+      - "天然气断供"
+      - "油田遇袭"
+      - "管道中断"
+    related_assets: ["oil", "natural_gas", "energy_stocks"]
+    impact_sectors: ["oil_gas", "chemical", "aviation"]
+    
+  # 3. 加密货币冲击 (新增)
+  crypto_shock:
+    name: "加密货币冲击"
+    keywords:
+      - "BTC暴跌"
+      - "比特币崩盘"
+      - "交易所暴雷"
+      - "FTX倒闭"
+      - "加密货币监管"
+      - "币圈危机"
+      - "挖矿禁令"
+      - "稳定币脱锚"
+    related_assets: ["btc", "eth", "crypto_stocks"]
+    impact_sectors: ["blockchain", "tech", "mining"]
+    
+  # 4. 贵金属异动 (新增)
+  precious_metals_shock:
+    name: "贵金属异动"
+    keywords:
+      - "黄金暴涨"
+      - "金价飙升"
+      - "避险买盘"
+      - "央行购金"
+      - "白银逼空"
+    related_assets: ["gold", "silver", "mining_stocks"]
+    impact_sectors: ["gold_mining", "jewelry"]
+    
+  # 5. 基本金属冲击 (新增)
+  base_metals_shock:
+    name: "基本金属冲击"
+    keywords:
+      - "铜价暴跌"
+      - "镍逼空"
+      - "锂价格战"
+      - "矿工罢工"
+      - "供应链中断"
+    related_assets: ["copper", "nickel", "lithium"]
+    impact_sectors: ["mining", "new_energy", "manufacturing"]
+    
+  # 6. 农产品冲击 (新增)
+  agricultural_shock:
+    name: "农产品冲击"
+    keywords:
+      - "粮食危机"
+      - "极端天气"
+      - "出口禁令"
+      - "农作物减产"
+      - "粮食安全"
+    related_assets: ["corn", "wheat", "soybean"]
+    impact_sectors: ["agriculture", "food", "fertilizer"]
+    
+  # 7. 汇率冲击 (新增)
+  forex_shock:
+    name: "汇率冲击"
+    keywords:
+      - "美元暴涨"
+      - "人民币贬值"
+      - "日元干预"
+      - "汇率战争"
+      - "货币崩盘"
+    related_assets: ["dxy", "usdcny", "usdjpy"]
+    impact_sectors: ["export", "import", "tourism"]
+    
+  # 8. 利率冲击 (新增)
+  rate_shock:
+    name: "利率冲击"
+    keywords:
+      - "美债收益率飙升"
+      - "收益率倒挂"
+      - "美联储加息"
+      - "缩表"
+      - "流动性紧缩"
+    related_assets: ["us_10y", "us_2y", "credit"]
+    impact_sectors: ["finance", "real_estate", "growth_stocks"]
+    
+  # 9. 金融危机
+  financial_crisis:
+    name: "金融危机"
+    keywords:
+      - "银行倒闭"
+      - "债务危机"
+      - "流动性危机"
+      - "信用违约"
+      - "雷曼时刻"
+    related_assets: ["bank_stocks", "credit", "vix"]
+    impact_sectors: ["finance", "real_estate"]
+    
+  # 10. 公共卫生事件
+  pandemic:
+    name: "公共卫生事件"
+    keywords:
+      - "疫情"
+      - "病毒"
+      - "传染病"
+      - "封锁"
+      - "隔离"
+    related_assets: ["healthcare", "vix"]
+    impact_sectors: ["healthcare", "tourism", "aviation", "retail"]
+    
+  # 11. 贸易摩擦
+  trade_war:
+    name: "贸易摩擦"
+    keywords:
+      - "贸易战"
+      - "关税"
+      - "贸易壁垒"
+      - "出口限制"
+      - "实体清单"
+    related_assets: ["semiconductor", "agriculture"]
+    impact_sectors: ["tech", "manufacturing", "agriculture"]
+
+# 加密货币相关A股板块映射 (新增)
+crypto_sector_mapping:
+  beneficiary_sectors:  # 加密货币上涨受益板块
+    - "区块链"
+    - "数字货币"
+    - "算力"
+    - "矿机"
+  sensitive_sectors:  # 加密货币下跌受影响板块
+    - "区块链"
+    - "数字货币"
+    - "元宇宙"
+  related_stocks:
+    btc_mining:
+      - "000977"  # 中嘉博创
+      - "300017"  # 网宿科技
+    blockchain:
+      - "300386"  # 飞天诚信
+      - "300468"  # 四方精创
+      - "002152"  # 广电运通
+
+# 传导路径配置 (扩展)
+transmission_paths:
+  # 原有路径
+  cost_input:
+    name: "成本输入型"
+    trigger_assets: ["oil", "natural_gas"]
+    intermediate_indicators: ["bei", "irs", "ppi"]
+    affected_sectors: ["aviation", "chemical", "logistics"]
+    
+  risk_aversion:
+    name: "避险情绪型"
+    trigger_assets: ["vix", "gold", "dxy"]
+    intermediate_indicators: ["north_flow", "margin_flow"]
+    affected_sectors: ["growth_stocks", "high_beta"]
+  
+  # 新增路径
+  crypto_contagion:  # 加密货币传染
+    name: "加密货币传染型"
+    trigger_assets: ["btc", "eth"]
+    intermediate_indicators: ["risk_sentiment", "tech_correlation"]
+    affected_sectors: ["blockchain", "tech", "new_economy"]
+    
+  rate_pressure:  # 利率压力
+    name: "利率压力型"
+    trigger_assets: ["us_10y", "us_2y"]
+    intermediate_indicators: ["valuation_pressure", "fund_flow"]
+    affected_sectors: ["growth_stocks", "real_estate", "high_leverage"]
+
+# 阈值配置 (扩展)
+thresholds:
+  # 原油
+  oil:
+    single_day_change: 0.03
+    cumulative_3day: 0.06
+    volatility_multiplier: 2.0
+  
+  # 加密货币 (新增)
+  crypto:
+    btc_single_day_change: 0.10  # BTC单日涨跌幅阈值10%
+    btc_cumulative_3day: 0.20    # 3日累计20%
+    eth_correlation_threshold: 0.8
+  
+  # 黄金 (新增)
+  gold:
+    single_day_change: 0.02
+    cumulative_3day: 0.05
+  
+  # 美元指数 (新增)
+  dxy:
+    single_day_change: 0.01
+    cumulative_3day: 0.02
+  
+  # 美债收益率 (新增)
+  treasury_yield:
+    single_day_change_bp: 10   # 单日变化10BP
+    cumulative_3day_bp: 20     # 3日累计20BP
+  
+  # VIX
+  vix:
+    single_day_change: 0.20
+    cumulative_3day: 0.35
+  
+  # 北向资金
+  north_flow:
+    single_day_outflow: 50  # 单日净流出50亿
+    cumulative_3day_outflow: 100
+
+# 历史事件库 (扩展)
+historical_events:
+  # 原油相关
+  - event_id: "EVT_20190914_saudi_attack"
+    event_type: "energy_shock"
+    event_date: "2019-09-14"
+    description: "沙特阿美油田遇袭，原油产能减半"
+    oil_price_change: 0.15
+    
+  - event_id: "EVT_20220224_ukraine_war"
+    event_type: "geopolitical"
+    event_date: "2022-02-24"
+    description: "俄乌冲突爆发"
+    oil_price_change: 0.08
+    
+  # 加密货币相关 (新增)
+  - event_id: "EVT_20221111_ftx_collapse"
+    event_type: "crypto_shock"
+    event_date: "2022-11-11"
+    description: "FTX交易所申请破产，加密货币市场崩盘"
+    btc_price_change: -0.20
+    
+  - event_id: "EVT_20220509_terra_collapse"
+    event_type: "crypto_shock"
+    event_date: "2022-05-09"
+    description: "Terra/Luna稳定币脱锚崩盘"
+    btc_price_change: -0.15
+    
+  - event_id: "EVT_20240111_btc_etf"
+    event_type: "crypto_shock"
+    event_date: "2024-01-11"
+    description: "比特币现货ETF获批上市"
+    btc_price_change: 0.05
+    
+  # 汇率相关 (新增)
+  - event_id: "EVT_20220922_jpy_intervention"
+    event_type: "forex_shock"
+    event_date: "2022-09-22"
+    description: "日本央行干预日元汇率"
+    usdjpy_change: -0.02
+
+# 日志配置
+logging:
+  level: "INFO"
+  file: "logs/shock_detector.log"
+  rotation: "10 MB"
+
+# 数据库配置
+database:
+  type: "duckdb"
+  path: "data/shock_detector.db"
